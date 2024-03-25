@@ -1,9 +1,10 @@
-const dataModule = require("../helper/delete_user");
+const worker = require("../helper/add_grocery_item").worker;
 
-exports.deleteUser = async (req, res) => {
+exports.addGroceryItem = async (req, res) => {
     try {
-        dataModule.worker(req.params,(err, result) => {
-            if (err.status!=200) {
+        console.log("addGroceryItem Data===>:", req.body)
+        worker(req.body, (err, result) => {
+            if (err.status != 200) {
                 console.error(err);
                 res.status(500).send('Internal server error');
             } else {

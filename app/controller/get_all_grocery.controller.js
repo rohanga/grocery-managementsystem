@@ -1,10 +1,9 @@
-const dataModule = require("../helper/update_user");
+const worker = require("../helper/get_all_grocery").worker;
 
-exports.updateUser = async (req, res) => {
+exports.getExistingGrocery = async (req, res) => {
     try {
-        console.log(req.body,req.params)
-        dataModule.worker(req.body,req.params,(err, result) => {
-            if (err.status!=200) {
+        worker(req.query, (err, result) => {
+            if (err.status != 200) {
                 console.error(err);
                 res.status(500).send('Internal server error');
             } else {

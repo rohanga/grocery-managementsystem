@@ -1,10 +1,9 @@
-const dataModule = require("../helper/save_user");
+const worker = require("../helper/update_item").worker;
 
-exports.saveUser = async (req, res) => {
+exports.updateItem = async (req, res) => {
     try {
-        console.log("Save Data===>:",req.body)
-        dataModule.worker(req.body,(err, result) => {
-            if (err.status!=200) {
+        worker(req.body, req.params, (err, result) => {
+            if (err.status != 200) {
                 console.error(err);
                 res.status(500).send('Internal server error');
             } else {

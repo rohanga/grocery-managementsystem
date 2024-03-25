@@ -1,10 +1,10 @@
 const dbConnect = require("../../connection")
 
 
-exports.getUser = (query) => {
+exports.getItem = (query) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let userModel = await dbConnect("userData");
+            let userModel = await dbConnect("grocerydata");
             const result = userModel.findOne(query)
             resolve(result)
 
@@ -14,14 +14,14 @@ exports.getUser = (query) => {
     });
 }; 
 
-exports.getALLUser = () => {
+exports.getExistingGrocery= (query) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let userModel = await dbConnect("userData");
-            const result = await userModel.find({}).toArray()
+            console.log("query&&&&&&&&&&&",query)
+            let model = await dbConnect("grocerydata");
+            const result = await model.find(query).toArray();
+            console.log(result)
             resolve(result)
-          
-          
 
         } catch (error) {
             reject(error);
@@ -29,10 +29,10 @@ exports.getALLUser = () => {
     });
 };
 
-exports.updateUser = (query, setData) => {
+exports.updateItem = (query, setData) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let userModel = await dbConnect("userData");
+            let userModel = await dbConnect("grocerydata");
             
             const result = await userModel.updateOne(query, {
                 $set: setData
@@ -44,10 +44,10 @@ exports.updateUser = (query, setData) => {
         }
     });
 };
-exports.deleteUser = (query) => {
+exports.removeItem = (query) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let userModel = await dbConnect("userData");
+            let userModel = await dbConnect("grocerydata");
             const result =userModel.deleteOne(query)
                     
                 resolve(result);
@@ -57,11 +57,11 @@ exports.deleteUser = (query) => {
         }
     });
 };
-exports.saveUser = (query) => {
+exports.saveGroceryItem = (query) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let userModel = await dbConnect("userData");
-            const result = userModel.insertOne(query)
+            let model = await dbConnect("grocerydata");
+            const result = model.insertOne(query)
 
             resolve(result);
         } catch (error) {
